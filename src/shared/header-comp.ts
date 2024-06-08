@@ -1,6 +1,6 @@
 import { appEvents } from "./app-events";
 import { BaseComp } from "./base-comp";
-import { navigator } from "./navigator";
+import { router } from "./router-comp";
 
 export class HeaderComp extends BaseComp {
     getHTML(): string {
@@ -33,7 +33,7 @@ class NavBarComp extends BaseComp {
         return `
         <nav>
             <ul>
-                ${navigator.pages.filter(page => !page.active).map(page => {
+                ${router.pages.filter(page => !page.active).map(page => {
                     return `
                 <li onclick="navToPage('${page.path}')">${page.label}</li>
                     `;

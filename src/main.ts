@@ -1,5 +1,5 @@
 import { exec, get } from "./shared/base-comp";
-import { navigator } from "./shared/navigator";
+import { router } from "./shared/router-comp";
 import { TemplateComp } from "./shared/template-comp";
 
 let template = TemplateComp;
@@ -12,6 +12,6 @@ setVal(window, 'get', get);
 
 setVal(window, 'exec', exec);
 
-setVal(window, 'restorePage', navigator.restorePage);
+setVal(window, 'restorePage', router.restorePage);
 
-setVal(window, 'navToPage', navigator.navToPage);
+setVal(window, 'navToPage', router.navToPage);
