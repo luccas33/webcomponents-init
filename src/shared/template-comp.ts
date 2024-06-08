@@ -7,17 +7,45 @@ import { FooterComp } from "./footer";
 const components = [HeaderComp, MenuComp, RouterComp, FooterComp];
 
 export class TemplateComp extends BaseComp {
-    constructor() {
-        super();
-    }
     getHTML(): string {
         return `
-            <header-comp></header-comp>
-            <div class="main">
-                <menu-comp></menu-comp>
-                <router-comp></router-comp>
+            <div class="header"><header-comp></header-comp></div>
+            <div class="content flex-center">
+                <div class="menu"><menu-comp></menu-comp></div>
+                <div class="router"><router-comp></router-comp></div>
             </div>
-            <footer-comp></footer-comp>
+            <div class="footer"><footer-comp></footer-comp></div>
+        `;
+    }
+
+    getStyle(): string {
+        return `
+            .header {
+                height: 75px;
+                background-color: var(--pc);
+                padding: 0 5px;
+            }
+
+            .content {
+                min-height: calc(100vh - 170px);
+            }
+
+            .menu, .router {
+                min-height: calc(100vh - 170px);
+                padding: 0 5px;
+            }
+
+            .menu {
+                width: 250px;
+                background-color: var(--sc);
+            }
+
+            .router {width: calc(100% - 250px)}
+
+            .footer {
+                height: 75px;
+                background-color: var(--pc);
+            }
         `;
     }
 }

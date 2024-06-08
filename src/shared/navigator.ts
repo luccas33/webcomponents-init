@@ -1,3 +1,4 @@
+import { globalStyles } from "./global-styles";
 import { appEvents } from "./app-events";
 
 enum Paths {

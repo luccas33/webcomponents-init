@@ -1,3 +1,5 @@
+import { globalStyles } from "./global-styles";
+
 let globalId = 0;
 let globalObjects: {id: number, value: any}[] = [];
 
@@ -35,9 +37,7 @@ export class BaseComp extends HTMLElement {
 
     render() {
         this.clearObjects();
-        let css = this.getStyle();
-        css = css == '' ? '' : `<style>${css}</style>`;
-        let html = `${css} ${this.getHTML()}`;
+        let html = `<style>${globalStyles()} ${this.getStyle()}</style> ${this.getHTML()}`;
         this.outputs.forEach(output => {
             let name = '#' + output.name;
             html = html.replace(name, output.value);

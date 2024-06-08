@@ -13,7 +13,7 @@ export class RouterComp extends BaseComp {
     }
 
     getHTML(): string {
-        let page = navigator.pages.find(pg => pg.active)?.path || 'home';
+        let page = navigator.pages.find(pg => pg.active)?.name || 'home-comp';
         return `<${page}></${page}>`;
     }
 }
