@@ -24,6 +24,7 @@ export class BaseComp extends HTMLElement {
         this.shadow = this.attachShadow({mode: 'closed'});
         let props = this.getAttribute('props');
         this.props = props ? get(Number.parseInt(props)) || {} : {};
+        this.props.render = () => this.render();
         this.render();
     }
 

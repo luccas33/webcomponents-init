@@ -47,9 +47,8 @@ function navToPage(path: string) {
     page.active = true;
     if (document.getElementsByTagName('template-comp').length == 0) {
         document.body.innerHTML += '<template-comp></template-comp>';
-    } else {
-        appEvents.exec(appEvents.keys.navToPage);
     }
+    appEvents.exec(appEvents.keys.navToPage);
     let url = new URL(document.location.href);
     url.searchParams.set('page', path);
     window.history.pushState(null, '', url.toString());
