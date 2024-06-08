@@ -65,9 +65,11 @@ export class BaseComp extends HTMLElement {
         let id = ++globalId;
         globalObjects.push({id, value});
         this.objs.push({name, id});
+        return value;
     }
 
     print(name: string, value: string) {
         this.outputs.push({name, value});
+        return value;
     }
 }

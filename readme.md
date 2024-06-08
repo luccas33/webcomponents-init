@@ -39,7 +39,7 @@ Obs: a tag do componente deve ter um traço no nome.
 
 No HTML
 ```HTML
-<button onclick="navToPage('path')"> Navegar <button>
+<button onclick="navToPage('path')"> Navegar </button>
 ```
 
 No Typescript
@@ -54,6 +54,7 @@ Renderiza o componente novamente
 this.render();
 ```
 Obs: os componentes não renderizam automaticamente quando ocorre qualquer mudança.
+
 Apenas renderizam novamente chamando a função render.
 
 Cria uma variável para escrever algo no HTML
@@ -77,13 +78,17 @@ Referencia no HTML com $
 <input onchange="exec($changeTxt1, event.target.value)">
 ```
 **exec**
+
 Executa caso a variável seja uma função, repassando para a função o segundo argumento de exec.
 
 **props**
+
 O objeto referenciado $props1 é passado para o sub componente.
+
 Este objeto pode ser acessado dentro do sub componente: **this.props**
 
 Ao passar um objeto na props de um sub componente, o componente pai tem acesso a função render do filho através do mesmo objeto que foi passado: **props.render()**
+
 Caso seja necessário renderizar novamente o componente filho ao alterar suas props, use esta função.
 
 ### CSS Global
@@ -105,4 +110,5 @@ appEvents.exec('nomeEvento', propOpcional);
 ```
 
 **navToPage**
+
 Este evento é chamado ao trocar de página
