@@ -1,7 +1,7 @@
 import { HelloWorldComp } from "../pages/hello-world";
 import { HomeComp } from "../pages/home";
 import { appEvents } from "./app-events";
-import { Page } from "./router-comp";
+import { Page } from "./components/router-comp";
 
 const pageClasses = [HomeComp, HelloWorldComp];
 

@@ -1,7 +1,7 @@
 import { appEvents } from "./shared/app-events";
 import { exec, get } from "./shared/base-comp";
 import { routes } from "./shared/routes";
-import { TemplateComp } from "./shared/template-comp";
+import { TemplateComp } from "./shared/components/template-comp";
 
 let template = TemplateComp;
 

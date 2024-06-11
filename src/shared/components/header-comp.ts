@@ -1,6 +1,6 @@
-import { appEvents } from "./app-events";
-import { BaseComp, CompProps } from "./base-comp";
-import { routes } from "./routes";
+import { appEvents } from "../app-events";
+import { BaseComp, CompProps } from "../base-comp";
+import { routes } from "../routes";
 
 export class HeaderComp extends BaseComp<CompProps> {
     getHTML(): string {

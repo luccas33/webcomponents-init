@@ -1,5 +1,5 @@
-import { appEvents } from "./app-events";
-import { BaseComp, CompProps } from "./base-comp";
+import { appEvents } from "../app-events";
+import { BaseComp, CompProps } from "../base-comp";
 
 export interface Page {
     name: string, 

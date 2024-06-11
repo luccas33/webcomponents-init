@@ -1,10 +1,10 @@
-import { BaseComp, CompProps } from "./base-comp";
+import { BaseComp, CompProps } from "../base-comp";
 import { HeaderComp } from "./header-comp";
-import { MenuComp } from "./menu";
+import { MenuComp } from "./menu-comp";
 import { RouterComp, RouterProps } from "./router-comp";
-import { FooterComp } from "./footer";
-import { appEvents } from "./app-events";
-import { routes } from "./routes";
+import { FooterComp } from "./footer-comp";
+import { appEvents } from "../app-events";
+import { routes } from "../routes";
 
 const components = [HeaderComp, MenuComp, RouterComp, FooterComp];
 
