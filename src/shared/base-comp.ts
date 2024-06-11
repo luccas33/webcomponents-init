@@ -38,15 +38,21 @@ export class BaseComp extends HTMLElement {
 
     render() {
         this.clearObjects();
-        let html = `<style>${globalStyles()} ${this.getStyle()}</style> ${this.getHTML()}`;
+        let html = this.getHTML();
+
         this.outputs.forEach(output => {
             let name = '#' + output.name;
             html = html.replace(name, output.value);
         });
+
         this.objs.forEach(obj => {
             let name = '$' + obj.name;
             html = html.replace(name, obj.id + '');
         });
+
+        let globalCss = clearStyle(html, globalStyles());
+        html = `<style>${globalCss} \n ${this.getStyle()}</style> \n ${html}`;
+
         this.shadow.innerHTML = html;
     }
 
@@ -72,4 +78,17 @@ export class BaseComp extends HTMLElement {
         this.outputs.push({name, value});
         return value;
     }
+}
+
+function clearStyle(html: string, style: string) {
+    let div = document.createElement('div');
+    div.innerHTML = html;
+
+    return style.split('}').map(cls => {
+        let clsArr = cls.split('{');
+        if (clsArr.length < 2) return {};
+        return {selector: clsArr[0], content: clsArr[1]};
+    }).filter(cls => cls.selector && div.querySelector(cls.selector.trim()))
+        .map(cls => `${cls.selector} { ${cls.content} }`)
+        .join('');
 }
