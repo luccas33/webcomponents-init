@@ -13,18 +13,23 @@ export function exec(id: number, param: any) {
     if (func && typeof func == 'function') func(param);
 }
 
-export class BaseComp extends HTMLElement {
+export interface CompProps {
+    render: Function
+}
+
+export class BaseComp<P extends CompProps> extends HTMLElement {
     shadow;
-    props;
+    props: P;
     objs: {name: string, id: number}[] = [];
     outputs: {name: string, value: string}[] = [];
 
     constructor() {
         super();
         this.shadow = this.attachShadow({mode: 'closed'});
-        let props = this.getAttribute('props');
-        this.props = props ? get(Number.parseInt(props)) || {} : {};
-        this.props.render = () => this.render();
+        let propsId = this.getAttribute('props');
+        let props = propsId ? get(Number.parseInt(propsId)) || {} : {};
+        props.render = () => this.render();
+        this.props = props;
         this.render();
     }
 

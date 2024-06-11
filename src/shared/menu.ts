@@ -1,6 +1,6 @@
-import { BaseComp } from "./base-comp";
+import { BaseComp, CompProps } from "./base-comp";
 
-export class MenuComp extends BaseComp {
+export class MenuComp extends BaseComp<CompProps> {
     getHTML(): string {
         return /*html*/`<div class="content"><h2>MENU</h2></div>`;
     }

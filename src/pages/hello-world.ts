@@ -1,6 +1,6 @@
-import { BaseComp } from "../shared/base-comp";
+import { BaseComp, CompProps } from "../shared/base-comp";
 
-export class HelloWorldComp extends BaseComp {
+export class HelloWorldComp extends BaseComp<CompProps> {
     getHTML(): string {
         return `
             <h1>Hello World</h1>

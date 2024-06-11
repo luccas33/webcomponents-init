@@ -1,5 +1,6 @@
+import { appEvents } from "./shared/app-events";
 import { exec, get } from "./shared/base-comp";
-import { router } from "./shared/router-comp";
+import { routes } from "./shared/routes";
 import { TemplateComp } from "./shared/template-comp";
 
 let template = TemplateComp;
@@ -12,6 +13,8 @@ setVal(window, 'get', get);
 
 setVal(window, 'exec', exec);
 
-setVal(window, 'restorePage', router.restorePage);
+setVal(window, appEvents.keys.navToPage, (path: string) => routes.navToPage(path));
 
-setVal(window, 'navToPage', router.navToPage);
+if (document.getElementsByTagName('template-comp').length == 0) {
+    document.body.innerHTML += '<template-comp></template-comp>';
+}

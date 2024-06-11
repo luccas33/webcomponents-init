@@ -14,18 +14,18 @@ Go live com o plugin Live Server no arquivo index.html
 
 Crie as páginas em src/pages (opcional)
 
-Registre páginas em src/shared/router-comp.ts
+Registre páginas em src/shared/routes.ts
 
 Adicione na lista pages com o seguinte formato:
 ```JS
 {name: 'nome-da-tag', path: 'nome-na-url', label: 'Nome visível para o usuário (navbar)'}
 ```
 
-Também adicione a class do componente na lista components.
+Também adicione a class do componente na lista pageClasses.
 
 ### Adicionar Componente
 
-Todo componente deve extender BaseComp e implementar a função getHTML
+Todo componente deve extender BaseComp<CompProps> e implementar a função getHTML
 
 É opcional implementar a função getStyle
 
@@ -48,7 +48,7 @@ No HTML
 
 No Typescript
 ```JS
-router.navToPage('path');
+routes.navToPage('path');
 ```
 
 ### Funcionalidades dos Componentes

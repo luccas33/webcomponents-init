@@ -1,62 +1,58 @@
 import { appEvents } from "./app-events";
-import { BaseComp } from "./base-comp";
-import { HomeComp } from "../pages/home";
-import { HelloWorldComp } from "../pages/hello-world";
+import { BaseComp, CompProps } from "./base-comp";
 
-enum paths {
-    Home = 'home',
-    HelloWorld = 'helloworld'
+export interface Page {
+    name: string, 
+    path: string, 
+    label: string, 
+    active?: boolean
 }
 
-const pages: {name: string, path: string, label: string, active?: boolean}[] = [
-    {name: 'home-comp', label: 'Home', path: paths.Home},
-    {name: 'helloworld-comp', label: 'Hello World', path: paths.HelloWorld}
-];
+export interface RouterProps extends CompProps {
+    pages: Page[],
+    defaultPath: string,
+    pathParam: string,
+    eventName: string
+}
 
-const components = [HomeComp, HelloWorldComp];
-
-export class RouterComp extends BaseComp {
+export class RouterComp extends BaseComp<RouterProps> {
     constructor() {
         super();
-        appEvents.add(appEvents.keys.navToPage, () => this.render());
+        appEvents.add(this.props.eventName, (path: string) => this.navToPage(path));
     }
 
     getHTML(): string {
-        let page = pages.find(pg => pg.active)?.name || 'home-comp';
-        return `<${page}></${page}>`;
+        let activePage = this.props.pages.find(pg => pg.active);
+        let defaultPage = this.props.pages.find(pg => pg.path == this.props.defaultPath);
+        let page = activePage || this.getPageFromURL() || defaultPage;
+        if (page) {
+            page.active = true;
+        }
+        let name = page?.name || 'not-found';
+        return `<${name}></${name}>`;
     }
+
+    getPageFromURL() {
+        let params = new URL(document.location.href).searchParams;
+        let path = params.get(this.props.pathParam) || '';
+        return this.props.pages.find(pg => pg.path == path);
+    }
+
+    navToPage(path: string) {
+        path = !path || path.trim() == '' ? this.props.defaultPath : path.trim();
+        let page = this.props.pages.find(page => page.path == path);
+        if (!page) {
+            console.log(`Page ${path} not found`);
+            return;
+        };
+        this.props.pages.forEach(pg => pg.active = false);
+        page.active = true;
+        this.render();
+        let url = new URL(document.location.href);
+        url.searchParams.set(this.props.pathParam, path);
+        window.history.pushState(null, '', url.toString());
+    }
+
 }
 
 customElements.define('router-comp', RouterComp);
-
-function restorePage() {
-    let params = new URL(document.location.href).searchParams;
-    let page = params.get('page') || '';
-    page = page.trim() == '' ? 'home' : page.trim();
-    navToPage(page);
-}
-
-function navToPage(path: string) {
-    path = !path || path.trim() == '' ? 'home' : path.trim();
-    let page = pages.find(page => page.path == path);
-    if (!page) {
-        console.log('Page not found!');
-        return;
-    };
-    pages.forEach(page => page.active = false);
-    page.active = true;
-    if (document.getElementsByTagName('template-comp').length == 0) {
-        document.body.innerHTML += '<template-comp></template-comp>';
-    }
-    appEvents.exec(appEvents.keys.navToPage);
-    let url = new URL(document.location.href);
-    url.searchParams.set('page', path);
-    window.history.pushState(null, '', url.toString());
-}
-
-export const router = {
-    pages,
-    paths,
-    restorePage,
-    navToPage
-};

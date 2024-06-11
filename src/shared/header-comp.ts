@@ -1,8 +1,8 @@
 import { appEvents } from "./app-events";
-import { BaseComp } from "./base-comp";
-import { router } from "./router-comp";
+import { BaseComp, CompProps } from "./base-comp";
+import { routes } from "./routes";
 
-export class HeaderComp extends BaseComp {
+export class HeaderComp extends BaseComp<CompProps> {
     getHTML(): string {
         return /*html*/`
             <div class="content flex-center just-between">
@@ -23,7 +23,7 @@ export class HeaderComp extends BaseComp {
 
 customElements.define('header-comp', HeaderComp);
 
-class NavBarComp extends BaseComp {
+class NavBarComp extends BaseComp<CompProps> {
     constructor() {
         super();
         appEvents.add(appEvents.keys.navToPage, () => this.render());
@@ -33,7 +33,7 @@ class NavBarComp extends BaseComp {
         return /*html*/`
         <nav>
             <ul>
-                ${router.pages.filter(page => !page.active).map(page => {
+                ${routes.pages.filter(page => !page.active).map(page => {
                     return /*html*/`
                 <li onclick="navToPage('${page.path}')">${page.label}</li>
                     `;
