@@ -35,6 +35,10 @@ customElements.define('nome-comp', ClassComp);
 ```
 Obs: a tag do componente deve ter um traço no nome.
 
+**Import dos Componentes**
+
+Todo componente deve ter uma lista declarada com as class dos sub componentes que utiliza.
+
 ### Navegar Para uma Página
 
 No HTML
@@ -90,6 +94,23 @@ Este objeto pode ser acessado dentro do sub componente: **this.props**
 Ao passar um objeto na props de um sub componente, o componente pai tem acesso a função render do filho através do mesmo objeto que foi passado: **props.render()**
 
 Caso seja necessário renderizar novamente o componente filho ao alterar suas props, use esta função.
+
+Eis um exemplo:
+
+```JS
+let propsSubComp = this.ref('propsSubComp', {prop1: '1', prop2: 2});
+
+let txtChange = this.ref('txtChange', (evtValue: string) => {
+    propsSubComp.prop1 = evtValue;
+    propsSubComp.render();
+});
+```
+```HTML
+return `
+    <input onchange="exec($txtChange, event.target.value)">
+    <sub-comp props="$propsSubComp"></sub-comp>
+`;
+```
 
 ### CSS Global
 
