@@ -1,6 +1,6 @@
 
 export function globalStyles() {
-    return `
+    return /*css*/`
         * {
             --pc: #449fb1;
             --sc: #a6d1d9;

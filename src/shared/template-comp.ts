@@ -8,7 +8,7 @@ const components = [HeaderComp, MenuComp, RouterComp, FooterComp];
 
 export class TemplateComp extends BaseComp {
     getHTML(): string {
-        return `
+        return /*html*/`
             <div class="header"><header-comp></header-comp></div>
             <div class="content flex-center">
                 <div class="menu"><menu-comp></menu-comp></div>
@@ -19,7 +19,7 @@ export class TemplateComp extends BaseComp {
     }
 
     getStyle(): string {
-        return `
+        return /*css*/`
             .header {
                 height: 75px;
                 background-color: var(--pc);

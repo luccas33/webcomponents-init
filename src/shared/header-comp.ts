@@ -4,7 +4,7 @@ import { router } from "./router-comp";
 
 export class HeaderComp extends BaseComp {
     getHTML(): string {
-        return `
+        return /*html*/`
             <div class="content flex-center just-between">
                 <div class="init"><h2>Typescript Init</h2></div>
                 <navbar-comp></navbar-comp>
@@ -13,7 +13,7 @@ export class HeaderComp extends BaseComp {
     }
 
     getStyle(): string {
-        return `
+        return /*css*/`
             .init {width: 250px}
 
             .init > h2 {text-align: center}
@@ -30,11 +30,11 @@ class NavBarComp extends BaseComp {
     }
 
     getHTML(): string {
-        return `
+        return /*html*/`
         <nav>
             <ul>
                 ${router.pages.filter(page => !page.active).map(page => {
-                    return `
+                    return /*html*/`
                 <li onclick="navToPage('${page.path}')">${page.label}</li>
                     `;
                 }).join('')}
@@ -44,7 +44,7 @@ class NavBarComp extends BaseComp {
     }
 
     getStyle(): string {
-        return `
+        return /*css*/`
             nav {margin-right: 20px}
 
             li {cursor: pointer}
