@@ -16,9 +16,11 @@ export interface RouterProps extends CompProps {
 }
 
 export class RouterComp extends BaseComp<RouterProps> {
+    navEventId: number;
+
     constructor() {
         super();
-        appEvents.add(this.props.eventName, (path: string) => this.navToPage(path));
+        this.navEventId = appEvents.add(this.props.eventName, (path: string) => this.navToPage(path));
     }
 
     getHTML(): string {
@@ -53,6 +55,13 @@ export class RouterComp extends BaseComp<RouterProps> {
         window.history.pushState(null, '', url.toString());
     }
 
+    disconnectedCallback() {
+        this.clearObjects();
+        appEvents.remove(this.props.eventName, this.navEventId);
+        let url = new URL(document.location.href);
+        url.searchParams.delete(this.props.pathParam);
+        window.history.pushState(null, '', url.toString());
+    }
 }
 
 customElements.define('router-comp', RouterComp);
