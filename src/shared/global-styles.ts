@@ -13,7 +13,5 @@ export function globalStyles() {
         }
 
         .just-between {justify-content: space-between;}
-
-        .w100 {width: 100%}
     `;
 }

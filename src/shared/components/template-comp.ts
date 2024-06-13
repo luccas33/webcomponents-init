@@ -10,6 +10,7 @@ const components = [HeaderComp, MenuComp, RouterComp, FooterComp];
 
 export class TemplateComp extends BaseComp<CompProps> {
     getHTML(): string {
+        this.ref('menuProps', {openCloseMenu: () => this.openCloseMenu()});
         let rts: RouterProps = {
             pages: routes.pages,
             defaultPath: routes.paths.Home,
@@ -21,11 +22,28 @@ export class TemplateComp extends BaseComp<CompProps> {
         return /*html*/`
             <div class="header"><header-comp></header-comp></div>
             <div class="content flex-center">
-                <div class="menu"><menu-comp></menu-comp></div>
-                <div class="router"><router-comp props="$routes"></router-comp></div>
+                <div class="menu opened"><menu-comp props="$menuProps"></menu-comp></div>
+                <div class="router closed"><router-comp props="$routes"></router-comp></div>
             </div>
             <div class="footer"><footer-comp></footer-comp></div>
         `;
+    }
+
+    openCloseMenu() {
+        let menu = this.shadow.querySelector('.menu');
+        let router = this.shadow.querySelector('.router');
+        if (!menu || !router) return;
+        if (menu.classList.contains('opened')) {
+            menu.classList.remove('opened');
+            router.classList.remove('opened');
+            menu.classList.add('closed');
+            router.classList.add('closed');
+            return;
+        }
+        menu.classList.remove('closed');
+        router.classList.remove('closed');
+        menu.classList.add('opened');
+        router.classList.add('opened');
     }
 
     getStyle(): string {
@@ -37,20 +55,37 @@ export class TemplateComp extends BaseComp<CompProps> {
             }
 
             .content {
-                min-height: calc(100vh - 170px);
+                min-height: calc(100vh - 150px);
+                align-items: stretch;
             }
 
             .menu, .router {
-                min-height: calc(100vh - 170px);
-                padding: 0 5px;
+                padding: 5px;
             }
 
             .menu {
-                width: 250px;
                 background-color: var(--sc);
             }
 
-            .router {width: calc(100% - 250px)}
+            .menu.opened {
+                width: 250px;
+                transition: 1.5s;
+            }
+
+            .menu.closed {
+                width: 30px;
+                transition: 1.5s;
+            }
+
+            .router.opened {
+                width: calc(100% - 250px);
+                transition: 1.5s;
+            }
+
+            .router.closed {
+                width: calc(100% - 30px);
+                transition: 1.5s;
+            }
 
             .footer {
                 height: 75px;
