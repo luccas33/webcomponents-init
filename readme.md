@@ -133,3 +133,42 @@ appEvents.exec('nomeEvento', propOpcional);
 **navToPage**
 
 Este evento é chamado ao trocar de página
+
+**callEvt**
+
+Execute eventos diretamente do HTML
+
+```HTML
+<button onclick="callEvt('eventName')">Click me</button>
+```
+
+### Subrotas
+
+Rotas são processadas pelo RouterComp.
+
+É possível configurar quantos routers forem necessários, de forma aninhada ou paralela.
+
+Propriedades do RouterComp:
+
+```JS
+{ // RouterProps
+    pages: [{name: 'nome-da-tag', path: 'nome-na-url', label: 'Nome visível para o usuário'}],
+    defaultPath: 'Path padrão (primeira renderização)',
+    pathParam: 'Nome do parâmetro do path na URL',
+    eventName: 'Chave do evento (usado em appEvents)'
+}
+```
+
+Obs: pathParam e eventName devem ser únicos para cada router.
+
+**Como Navegar**
+
+No HTML
+```HTML
+<button onclick="callEvt('eventName', 'path')"></button>
+```
+
+No Typescript
+```JS
+appEvents.exec('eventName', 'path');
+```

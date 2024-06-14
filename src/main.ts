@@ -15,6 +15,8 @@ setVal(window, 'exec', exec);
 
 setVal(window, appEvents.keys.navToPage, (path: string) => routes.navToPage(path));
 
+setVal(window, 'callEvt', (key: string, evtData?: string) => appEvents.exec(key, evtData));
+
 if (document.getElementsByTagName('template-comp').length == 0) {
     document.body.innerHTML += '<template-comp></template-comp>';
 }
