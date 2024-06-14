@@ -10,10 +10,11 @@ export class MenuComp extends BaseComp<MenuProps> {
     getHTML(): string {
         this.ref('mouseover', () => this.openCloseMenu());
         return /*html*/`
-            <div class="open-close-menu opened" onmouseover="exec($mouseover)"><div></div><div></div><div></div></div>
-            <div class="content">
-                <h2>MENU</h2>
-                <navbar-comp></navbar-comp>
+            <div class="container">
+                <div class="open-close-menu opened" onmouseover="exec($mouseover)"><div></div><div></div><div></div></div>
+                <div class="content">
+                    <navbar-comp></navbar-comp>
+                </div>
             </div>
             `;
     }
@@ -36,21 +37,29 @@ export class MenuComp extends BaseComp<MenuProps> {
 
     getStyle(): string {
         return /*css*/`
-            .content {
-                background-color: var(--sc);
-                padding: 0 3px;
+            .container {
+                position: relative;
             }
 
-            .content > h2 {text-align: center}
+            .content {
+                background-color: var(--sc);
+                padding-top: 67px;
+            }
+
+            .content > h2 {
+                text-align: center;
+                margin: 0;
+                padding: 10px;
+            }
 
             .hidden {
                 display: none;
             }
 
             .open-close-menu {
-                float: right;
-                top: 5px;
-                right: 5px;
+                position: absolute;
+                top: 0px;
+                right: 0px;
                 border-radius: 50%;
                 cursor: pointer;
                 width: 30px;
@@ -61,6 +70,7 @@ export class MenuComp extends BaseComp<MenuProps> {
                 justify-content: center;
                 flex-direction: column;
                 gap: 2px;
+                transform: translateX(50%) translateY(2px);
             }
 
             .open-close-menu > * {
@@ -105,21 +115,18 @@ class NavBarComp extends BaseComp<CompProps> {
                 cursor: pointer;
                 background-color: var(--pc);
                 width: calc(100% - 20px);
-                padding: 5px 10px;
-                color: black;
+                padding: 10px;
+                color: white;
                 font-weight: bold;
-                border: 1px solid #267585;
-                border-width: 0 1px 1px 0;
+                border-bottom: 1px solid #267585;
             }
 
             .nav-item.active-page {
                 cursor: default;
-                color: white;
+                background: white;
+                color: var(--pc);
             }
 
-            nav > div:nth-child(even) {
-                background-color: var(--pcl);
-            }
         `;
     }
 }

@@ -59,12 +59,13 @@ export class TemplateComp extends BaseComp<CompProps> {
                 align-items: stretch;
             }
 
-            .menu, .router {
+            .router {
                 padding: 5px;
             }
 
             .menu {
                 background-color: var(--sc);
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5)
             }
 
             .menu.opened {
