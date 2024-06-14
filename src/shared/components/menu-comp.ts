@@ -10,7 +10,7 @@ export class MenuComp extends BaseComp<MenuProps> {
     getHTML(): string {
         this.ref('mouseover', () => this.openCloseMenu());
         return /*html*/`
-            <button class="open-close-menu opened" onmouseover="exec($mouseover)">|||</button>
+            <div class="open-close-menu opened" onmouseover="exec($mouseover)"><div></div><div></div><div></div></div>
             <div class="content">
                 <h2>MENU</h2>
                 <navbar-comp></navbar-comp>
@@ -53,12 +53,20 @@ export class MenuComp extends BaseComp<MenuProps> {
                 right: 5px;
                 border-radius: 50%;
                 cursor: pointer;
-                border: none;
-                width: 25px;
-                height: 25px;
+                width: 30px;
+                height: 30px;
                 background: var(--pc);
-                color: white;
-                font-weight: bold;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
+                gap: 2px;
+            }
+
+            .open-close-menu > * {
+                height: 2px;
+                width: 15px;
+                background: white;
             }
         `;
     }
@@ -75,22 +83,43 @@ class NavBarComp extends BaseComp<CompProps> {
     getHTML(): string {
         return /*html*/`
         <nav>
-            <ul>
-                ${routes.pages.filter(page => !page.active).map(page => {
-                    return /*html*/`
-                <li onclick="navToPage('${page.path}')">${page.label}</li>
-                    `;
-                }).join('')}
-            </ul>
+            ${routes.pages.map(page => {
+                return /*html*/`
+            <div class="nav-item${page.active ? ' active-page' : ''}" 
+                 ${page.active ? '' : `onclick="navToPage(\'${page.path}\')"`}>
+                <a>${page.label}</a>
+            </div>
+                `;
+            }).join('')}
         </nav>
         `;
     }
 
     getStyle(): string {
         return /*css*/`
-            nav {margin-right: 20px}
+            nav {
+                width: 100%;
+            }
 
-            li {cursor: pointer}
+            .nav-item {
+                cursor: pointer;
+                background-color: var(--pc);
+                width: calc(100% - 20px);
+                padding: 5px 10px;
+                color: black;
+                font-weight: bold;
+                border: 1px solid #267585;
+                border-width: 0 1px 1px 0;
+            }
+
+            .nav-item.active-page {
+                cursor: default;
+                color: white;
+            }
+
+            nav > div:nth-child(even) {
+                background-color: var(--pcl);
+            }
         `;
     }
 }

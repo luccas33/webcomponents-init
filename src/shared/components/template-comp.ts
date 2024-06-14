@@ -23,7 +23,7 @@ export class TemplateComp extends BaseComp<CompProps> {
             <div class="header"><header-comp></header-comp></div>
             <div class="content flex-center">
                 <div class="menu opened"><menu-comp props="$menuProps"></menu-comp></div>
-                <div class="router closed"><router-comp props="$routes"></router-comp></div>
+                <div class="router opened"><router-comp props="$routes"></router-comp></div>
             </div>
             <div class="footer"><footer-comp></footer-comp></div>
         `;
