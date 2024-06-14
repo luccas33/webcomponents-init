@@ -5,7 +5,8 @@ export interface Page {
     name: string, 
     path: string, 
     label: string, 
-    active?: boolean
+    active?: boolean,
+    props?: any
 }
 
 export interface RouterProps extends CompProps {
@@ -31,7 +32,10 @@ export class RouterComp extends BaseComp<RouterProps> {
             page.active = true;
         }
         let name = page?.name || 'not-found';
-        return `<${name}></${name}>`;
+        if (page && page.props) {
+            this.ref('props', page.props);
+        }
+        return `<${name}${page?.props ? ' props="$props"' : ''}></${name}>`;
     }
 
     getPageFromURL() {
