@@ -120,12 +120,31 @@ o CSS da função globalStyles é adicionado a todos componentes.
 
 ### Eventos da Aplicação
 
-Registre um evento para ser chamado em outro local
+**Registre um evento** para ser chamado em outro local
 ```JS
 appEvents.add('nomeEvento', (prop: any) => {});
 ```
 
-Execute um evento
+Se estiver registrando um evento em um componente:
+```JS
+connectedCallback() {
+    this.addEvent('nomeEvento', (prop: any) => {});
+}
+```
+**connectedCallback** 
+É uma função padrão de Webcomponent.
+É executado quando o componente é adicionado na página.
+
+Obs: Sempre adicione eventos usando esta função, para que sejam removidos quando o componente sair da tela.
+
+**disconnectedCallback** é o oposto.
+É executado quando o componente é retirado da página.
+
+Obs: ao usar esta função, chame a função original **super.disconnectedCallback()**
+O **BaseComp** usa esta função para limpar objetos e eventos.
+
+
+**Execute um evento**
 ```JS
 appEvents.exec('nomeEvento', propOpcional);
 ```

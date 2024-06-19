@@ -1,3 +1,4 @@
+import { appEvents } from "./app-events";
 import { globalStyles } from "./global-styles";
 
 let globalId = 0;
@@ -14,7 +15,7 @@ export function exec(id: number, param: any) {
 }
 
 export interface CompProps {
-    render: Function
+    render: () => void
 }
 
 export class BaseComp<P extends CompProps> extends HTMLElement {
@@ -22,6 +23,7 @@ export class BaseComp<P extends CompProps> extends HTMLElement {
     props: P;
     objs: {name: string, id: number}[] = [];
     outputs: {name: string, value: string}[] = [];
+    events: {name: string, id: number}[] = [];
 
     constructor() {
         super();
@@ -63,6 +65,7 @@ export class BaseComp<P extends CompProps> extends HTMLElement {
 
     disconnectedCallback() {
         this.clearObjects();
+        this.removeEvents();
     }
 
     clearObjects() {
@@ -70,6 +73,10 @@ export class BaseComp<P extends CompProps> extends HTMLElement {
         this.objs = [];
         this.outputs = [];
         globalObjects = globalObjects.filter(o => !ids.find(id => id == o.id));
+    }
+
+    removeEvents() {
+        this.events.forEach(evt => appEvents.remove(evt.name, evt.id));
     }
 
     ref(name: string, value: any) {
@@ -82,6 +89,10 @@ export class BaseComp<P extends CompProps> extends HTMLElement {
     print(name: string, value: string) {
         this.outputs.push({name, value});
         return value;
+    }
+
+    addEvent(name: string, func: Function) {
+        this.events.push({name, id: appEvents.add(name, func)});
     }
 }
 

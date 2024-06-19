@@ -1,4 +1,3 @@
-import { appEvents } from "../app-events";
 import { BaseComp, CompProps } from "../base-comp";
 
 export interface Page {
@@ -17,13 +16,10 @@ export interface RouterProps extends CompProps {
 }
 
 export class RouterComp extends BaseComp<RouterProps> {
-    navEventId: number;
-
-    constructor() {
-        super();
-        this.navEventId = appEvents.add(this.props.eventName, (path: string) => this.navToPage(path));
+    connectedCallback() {
+        this.addEvent(this.props.eventName, (path: string) => this.navToPage(path));
     }
-
+    
     getHTML(): string {
         let activePage = this.props.pages.find(pg => pg.active);
         let defaultPage = this.props.pages.find(pg => pg.path == this.props.defaultPath);
@@ -60,8 +56,7 @@ export class RouterComp extends BaseComp<RouterProps> {
     }
 
     disconnectedCallback() {
-        this.clearObjects();
-        appEvents.remove(this.props.eventName, this.navEventId);
+        super.disconnectedCallback();
         let url = new URL(document.location.href);
         url.searchParams.delete(this.props.pathParam);
         window.history.pushState(null, '', url.toString());
