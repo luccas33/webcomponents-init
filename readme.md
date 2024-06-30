@@ -8,26 +8,23 @@ npm install
 
 npm run dev
 
-Go live com o plugin Live Server no arquivo index.html
-
-### Adicionar Página
-
-Crie as páginas em src/pages (opcional)
-
-Registre páginas em src/shared/routes.ts
-
-Adicione na lista pages com o seguinte formato:
-```JS
-{name: 'nome-da-tag', path: 'nome-na-url', label: 'Nome visível para o usuário (navbar)'}
-```
-
-Também adicione a class do componente na lista pageClasses.
+Go live com o plugin Live Server
 
 ### Adicionar Componente
 
-Todo componente deve extender BaseComp<CompProps> e implementar a função getHTML
+Todo componente deve extender BaseComp< CompProps > e implementar a função getHTML
 
 É opcional implementar a função getStyle
+
+**Exemplo de componente**
+
+```JS
+export class MeuComp extends BaseComp<CompProps> {
+    getHTML() {
+        return '';
+    }
+}
+```
 
 Todo componente deve ser registrado dessa forma:
 ```JS
@@ -35,9 +32,38 @@ customElements.define('nome-comp', ClassComp);
 ```
 Obs: a tag do componente deve ter um traço no nome.
 
+**Declarando Propriedades**
+
+```JS
+export interface MeuCompProps extends CompProps {
+    prop1: string,
+    prop2: number
+}
+
+export class MeuComp extends BaseComp<MeuCompProps> { }
+```
+
+Caso não queira validar as propriedades pelo Typescript:
+```JS
+export class MeuComp extends BaseComp<any> { }
+```
+
 **Import dos Componentes**
 
-Todo componente deve ter uma lista declarada com as class dos sub componentes que utiliza.
+Todo componente deve ter uma lista declarada com as class dos sub componentes importados que utiliza.
+
+### Adicionar Página
+
+Crie as páginas em src/pages (opcional)
+
+Registre páginas em src/shared/**routes.ts**
+
+Adicione na lista **pages** com o seguinte formato:
+```JS
+{name: 'nome-da-tag', path: 'nome-na-url', label: 'Nome visível para o usuário (navbar)'}
+```
+
+Também adicione a class do componente na lista **pageClasses**.
 
 ### Navegar Para uma Página
 
@@ -58,10 +84,11 @@ Renderiza o componente novamente
 this.render();
 ```
 Obs: os componentes não renderizam automaticamente quando ocorre qualquer mudança.
-
 Apenas renderizam novamente chamando a função render.
 
-Cria uma variável para escrever algo no HTML
+**print**
+
+Cria uma variável para escrever algo no HTML (para não sujar o HTML com JS)
 ```JS
 this.print('paragrafo1', obj.visivel ? `<p>${obj.txt}</p>` : '');
 ```
@@ -69,6 +96,8 @@ Referencia no HTML com #
 ```HTML
 <div> #paragrafo1 </div>
 ```
+
+**ref**
 
 Cria uma variável para referenciar algo no HTML
 ```JS
@@ -81,13 +110,16 @@ Referencia no HTML com $
 
 <input onchange="exec($changeTxt1, event.target.value)">
 ```
+
+**ref** é essencial para passar objetos via parâmetro e para executar funções no HTML.
+
 **exec**
 
 Executa caso a variável seja uma função, repassando para a função o segundo argumento de exec.
 
 **props**
 
-O objeto referenciado $props1 é passado para o sub componente.
+O objeto referenciado **$props1** é passado para o sub componente.
 
 Este objeto pode ser acessado dentro do sub componente: **this.props**
 
@@ -111,6 +143,8 @@ return `
     <sub-comp props="$propsSubComp"></sub-comp>
 `;
 ```
+
+Também é possível adicionar qualquer função do componente ao seu props, para que seja chamada de outro componente.
 
 ### CSS Global
 
