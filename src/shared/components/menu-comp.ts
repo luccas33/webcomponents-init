@@ -86,6 +86,7 @@ customElements.define('menu-comp', MenuComp);
 
 class NavBarComp extends BaseComp<CompProps> {
     connectedCallback() {
+        super.connectedCallback();
         this.addEvent(appEvents.keys.navToPage, () => setTimeout(() => this.render(), 10));
     }
 

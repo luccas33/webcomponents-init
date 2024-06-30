@@ -128,20 +128,24 @@ appEvents.add('nomeEvento', (prop: any) => {});
 Se estiver registrando um evento em um componente:
 ```JS
 connectedCallback() {
+    super.connectedCallback();
     this.addEvent('nomeEvento', (prop: any) => {});
 }
 ```
+Sempre adicione eventos usando a função addEvent, para que sejam removidos quando o componente sair da tela.
+
 **connectedCallback** 
 É uma função padrão de Webcomponent.
 É executado quando o componente é adicionado na página.
 
-Obs: Sempre adicione eventos usando esta função, para que sejam removidos quando o componente sair da tela.
+Ao usar este callback, chame a função original **super.connectedCallback()**, pois o **BaseComp** o utiliza.
+
+Não adicione eventos no contrutor, para evitar duplicidade, pois o construtor pode ser executado mais de uma vez.
 
 **disconnectedCallback** é o oposto.
 É executado quando o componente é retirado da página.
 
-Obs: ao usar esta função, chame a função original **super.disconnectedCallback()**
-O **BaseComp** usa esta função para limpar objetos e eventos.
+Ao usar este callback, chame a função original **super.disconnectedCallback()**, pois o **BaseComp** o utiliza.
 
 
 **Execute um evento**

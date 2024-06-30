@@ -32,7 +32,6 @@ export class BaseComp<P extends CompProps> extends HTMLElement {
         let props = propsId ? get(Number.parseInt(propsId)) || {} : {};
         props.render = () => this.render();
         this.props = props;
-        this.render();
     }
 
     getHTML() {
@@ -61,6 +60,10 @@ export class BaseComp<P extends CompProps> extends HTMLElement {
         html = `<style>${globalCss} \n ${this.getStyle()}</style> \n ${html}`;
 
         this.shadow.innerHTML = html;
+    }
+
+    connectedCallback() {
+        this.render();
     }
 
     disconnectedCallback() {
